@@ -11,7 +11,7 @@ A small Java Spring and Angular application which shows how to use PrizmDoc View
 
 ### Configure the Application to Connect to PAS
 
-Configure how to connect to PAS (PrizmDoc Application Services) by editing `src/main/resources/application.properties`.
+Configure how to connect to PAS (PrizmDoc Application Services) by editing `server/src/main/resources/application.properties`.
 
 #### Use PrizmDoc Cloud (Easiest)
 

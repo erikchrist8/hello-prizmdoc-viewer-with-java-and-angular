@@ -106,7 +106,7 @@ mvn spring-boot:run
 
 This will launch the example application server on `http://localhost:8080`.
 
-### 2. Start the Client React App in Dev Mode
+### 2. Start the Client Angular App in Dev Mode
 
 Given the application server is already running at `http://localhost:8080`, use a separate terminal window to start the client dev server like so:
 

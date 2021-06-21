@@ -93,6 +93,8 @@ If you want to do development on the Angular application in the `client` directo
 
 _**NOTE:** this requires [Node.js](https://nodejs.org) 10 or higher to be installed._
 
+_**NOTE:** this assumes you have built the client and server applications using `mvn clean install` as described above._
+
 Here is how to use the client dev server:
 
 ### 1. Make Sure the Example Application Server Is Started

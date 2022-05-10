@@ -65,8 +65,7 @@
 <p>
   To get document content, the viewer makes requests to PAS <i>through your web application</i> (or web server).
   That's why the Java application defines a proxy route to PAS at <code>pas-proxy/</code>
-  (powered by Netflix Zuul; see <code>application.properties</code>, <code>Application.java</code>,
-  and <code>AddApiKeyRequestHeaderFilter.java</code>).
+  (powered by Spring Gateway; see <code>application.yml</code>).
   If you look at the network traffic in dev tools, you'll see the requests made by the viewer for resources rooted at this path.
 </p>
 

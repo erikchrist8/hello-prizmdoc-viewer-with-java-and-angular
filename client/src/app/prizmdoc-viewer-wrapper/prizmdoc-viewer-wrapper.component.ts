@@ -14,7 +14,7 @@ export class PrizmDocViewerWrapperComponent implements OnInit, OnChanges {
   // This is the one required input. Once it is set to an actual value, the
   // viewer will be instantiated with this viewingSessionId.
   @Input()
-  viewingSessionId: string;
+  viewingSessionId!: string;
 
   @Input()
   width = "100%";
@@ -25,13 +25,13 @@ export class PrizmDocViewerWrapperComponent implements OnInit, OnChanges {
   @Output()
   viewerControl = new EventEmitter<any>();
 
-  prerequisiteError: Error;
+  prerequisiteError!: Error;
 
   @ViewChild('prizmdocViewerContainer', { static: false })
-  private container:ElementRef;
+  private container!: ElementRef;
 
-  private viewerCreated: boolean;
-  private static prerequisites = {};
+  private viewerCreated: boolean = false;
+  private static prerequisites: { [key: string] : ResourceLoadingState } = {};
 
   constructor(
     private renderer2: Renderer2
@@ -65,7 +65,7 @@ export class PrizmDocViewerWrapperComponent implements OnInit, OnChanges {
       await this.ensureScriptHasLoaded(`${VIEWER_ASSETS_BASE_ROUTE}/js/jquery.hotkeys.min.js`);
       await this.ensureScriptHasLoaded(`${VIEWER_ASSETS_BASE_ROUTE}/js/viewer.js`);
     } catch (err) {
-      this.prerequisiteError = err;
+      this.prerequisiteError = err instanceof Error ? err : new Error(String(err));
     }
   }
 
@@ -79,7 +79,7 @@ export class PrizmDocViewerWrapperComponent implements OnInit, OnChanges {
       documentID: this.viewingSessionId,
       imageHandlerUrl: PAS_PROXY_BASE_ROUTE,                     // Base path the viewer should use to make requests to PAS (PrizmDoc Application Services).
       viewerAssetsPath: VIEWER_ASSETS_BASE_ROUTE,                // Base path the viewer should use for static assets
-      resourcePath: `${VIEWER_ASSETS_BASE_ROUTE}/viewer-assets`, // Base path the viewer should use for images
+      resourcePath: `${VIEWER_ASSETS_BASE_ROUTE}/img`,           // Base path the viewer should use for images
       language: window.viewerCustomizations.languages['en-US'],
       template: window.viewerCustomizations.template,
       icons: window.viewerCustomizations.icons,
@@ -114,16 +114,16 @@ export class PrizmDocViewerWrapperComponent implements OnInit, OnChanges {
     this.viewerControl.emit(container.viewerControl);
   }
 
-  private ensureScriptHasLoaded (src) {
+  private ensureScriptHasLoaded (src: string) {
     return this.ensureHeadResourceExistsAndHasLoaded('script', 'src', src, { async: true });
   }
 
-  private ensureCssHasLoaded (href) {
+  private ensureCssHasLoaded (href: string) {
     return this.ensureHeadResourceExistsAndHasLoaded('link', 'href', href, { rel: 'stylesheet' });
   }
 
-  private ensureHeadResourceExistsAndHasLoaded (tagName, urlPropertyName, urlValue, attributes) {
-    return new Promise((resolve, reject) => {
+  private ensureHeadResourceExistsAndHasLoaded (tagName: string, urlPropertyName: string, urlValue: string, attributes: Object) {
+    return new Promise<void>((resolve, reject) => {
       if (!PrizmDocViewerWrapperComponent.prerequisites[urlValue]) {
         PrizmDocViewerWrapperComponent.prerequisites[urlValue] = new ResourceLoadingState();
 
@@ -140,10 +140,10 @@ export class PrizmDocViewerWrapperComponent implements OnInit, OnChanges {
           PrizmDocViewerWrapperComponent.prerequisites[urlValue].setLoaded();
         }
 
-        tag.onerror = () => {
+        tag.onerror = (err: Error) => {
           tag.onerror = null;
           tag.onload = null;
-          PrizmDocViewerWrapperComponent.prerequisites[urlValue].setErrored();
+          PrizmDocViewerWrapperComponent.prerequisites[urlValue].setErrored(err);
         }
 
         document.head.appendChild(tag);
@@ -180,7 +180,7 @@ class ResourceLoadingState {
     this._loadedCallbacks.forEach(f => f());
   }
 
-  setErrored(err) {
+  setErrored(err: Error) {
     this._isErrored = true;
     this._errorCallbacks.forEach(f => f(err));
   }

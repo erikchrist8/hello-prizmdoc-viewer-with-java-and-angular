@@ -4,7 +4,7 @@ A small Java Spring and Angular application which shows how to use PrizmDoc View
 
 ## Pre-Requisites
 
-- [JDK 11] or [JDK 8]
+- [JDK 11] or [JDK 8] or [JDK 18]
 - [Maven] 3.0+
 
 ## Setup
@@ -100,7 +100,7 @@ The instructions above performed a production build of the Angular client code a
 
 If you want to do development on the Angular application in the `client` directory, you can get faster feedback on your changes by using the built-in `ng serve` development server, which supports automatic hot reloading of changes in the browser as you make changes to the code.
 
-_**NOTE:** this requires [Node.js](https://nodejs.org) 10 or higher to be installed._
+_**NOTE:** this requires [Node.js](https://nodejs.org) 12.20 or higher to be installed._
 
 _**NOTE:** this assumes you have built the client and server applications using `mvn clean install` as described above._
 
@@ -131,6 +131,7 @@ This will launch the a client dev server at `http://localhost:4200` and open the
 The dev server (on port `4200`) is configured to proxy api routes to the application server (on port `8080`) so that the client can make REST API calls to the application server (this proxy setting is configured in `client/proxy.conf.json`).
 
 
+[JDK 18]: https://adoptium.net/temurin/releases?version=18
 [JDK 11]: https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot
 [JDK 8]: https://adoptopenjdk.net/releases.html?variant=openjdk8&jvmVariant=hotspot
 [Maven]: https://maven.apache.org/index.html

@@ -6,3 +6,7 @@
 .idea/uiDesigner.xml
 .idea/libraries/
 *.iml
+
+# Others
+**/.angular/cache/
+**/node_modules

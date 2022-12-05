@@ -30,6 +30,6 @@ export class DocumentService {
   // order to instantiate the viewer.
   createViewingSessionForDocument(filename: string): Observable<string> {
     return this.httpClient.post(`/documents/${filename}/beginViewing`, { responseType: 'json' })
-      .pipe(pluck('viewingSessionId'));
+      .pipe(pluck('viewingSessionId')) as Observable<string>;
   }
 }

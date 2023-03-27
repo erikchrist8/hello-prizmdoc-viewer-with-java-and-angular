@@ -15,10 +15,9 @@ Configure how to connect to PAS (PrizmDoc Application Services) by editing `serv
 
 #### Use PrizmDoc Cloud (Easiest)
 
-If you're just getting started, the easiest thing to do is to use [PrizmDoc Cloud]. We host PAS for you and all you need is your [PrizmDoc Cloud](https://cloud.accusoft.com) API key. If you don't have an API key, you can get one for free at https://cloud.accusoft.com.
+If you're just getting started, the easiest thing to do is to use [PrizmDoc Cloud]. We host PAS for you and all you need is your [PrizmDoc Cloud](https://cloud.accusoft.com) API key. If you don't have an API key, you can get one for free at <https://cloud.accusoft.com>.
 
 For [PrizmDoc Cloud], your `application.yml` will need to contain:
-
 
 ```yml
 prizmdoc:
@@ -52,7 +51,7 @@ and comment out the "PrizmDoc Cloud Configuration" section to enable the correct
 
 First, build the client and server applications with:
 
-```
+```bash
 mvn clean install
 ```
 
@@ -62,7 +61,7 @@ the server application.
 
 Then, run the server application:
 
-```
+```bash
 cd server
 mvn spring-boot:run
 ```
@@ -71,7 +70,7 @@ This will launch a web application on `http://localhost:8080`.
 
 If you have configured your connection to PAS correctly, you should see output like this (some lines removed for clarity):
 
-```
+```bash
 [INFO] Scanning for projects...
 .
 .
@@ -110,7 +109,7 @@ Here is how to use the client dev server:
 
 First, make sure the application server is running (if it is not already):
 
-```
+```bash
 cd server
 mvn spring-boot:run
 ```
@@ -121,7 +120,7 @@ This will launch the example application server on `http://localhost:8080`.
 
 Given the application server is already running at `http://localhost:8080`, use a separate terminal window to start the client dev server like so:
 
-```
+```bash
 cd client
 npm start
 ```
@@ -129,7 +128,6 @@ npm start
 This will launch the a client dev server at `http://localhost:4200` and open the page in your browser.
 
 The dev server (on port `4200`) is configured to proxy api routes to the application server (on port `8080`) so that the client can make REST API calls to the application server (this proxy setting is configured in `client/proxy.conf.json`).
-
 
 [JDK 18]: https://adoptium.net/temurin/releases?version=18
 [JDK 11]: https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot

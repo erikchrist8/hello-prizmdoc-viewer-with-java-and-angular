@@ -5,7 +5,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
@@ -22,6 +22,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Paths;
@@ -104,6 +105,19 @@ public class DocumentsController {
         // sent to the browser.
         new Thread(() -> {
             File document = new File(Paths.get(DOCUMENTS_DIRECTORY, requestedFilename).toString());
+            byte[] bytes = new byte[(int) document.length()];
+            FileInputStream fis = null;
+            
+            try {
+                fis = new FileInputStream(document);
+                fis.read(bytes);
+                
+            } catch(IOException e){
+                e.printStackTrace();
+            }
+
+            ByteArrayEntity documentEntity = new ByteArrayEntity(bytes);
+            
             HttpPut putRequest = new HttpPut(pasBaseUrl + "ViewingSession/u" + viewingSessionId + "/SourceFile");
 
             if (cloudApiKey != null) {
@@ -115,7 +129,7 @@ public class DocumentsController {
             }
 
             putRequest.addHeader("Content-Type", "application/octet-stream");
-            putRequest.setEntity(new FileEntity(document));
+            putRequest.setEntity(documentEntity);
 
             try {
                 log.info("Uploading source document");

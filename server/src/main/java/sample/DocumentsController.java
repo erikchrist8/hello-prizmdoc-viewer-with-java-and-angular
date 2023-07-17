@@ -111,10 +111,12 @@ public class DocumentsController {
             try {
                 fis = new FileInputStream(document);
                 fis.read(bytes);
+                fis.close();
                 
             } catch(IOException e){
                 e.printStackTrace();
             }
+            
 
             ByteArrayEntity documentEntity = new ByteArrayEntity(bytes);
             
